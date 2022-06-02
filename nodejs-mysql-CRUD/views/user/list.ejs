@@ -1,0 +1,73 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+<% if (messages.error) { %>
+	<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+	<p style="color:green"><%- messages.success %></p>
+<% } %>	
+<h1 style="font-family: Berlin Sans FB;text-shadow: 3px 3px 3px #ababab;text-align:center">Service Booking Table</h1>
+<style>
+	th{
+		 text-align:center ;
+		 background-color: #839ced;
+	}
+	
+ </style>
+<table  class="table" border="1">
+
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Mobile No.</th>
+		<th>Vehicle model</th>
+		<th>Vehicle NO.</th>
+		<th>Date</th>
+		<th>Service 1</th>
+		<th>Service 2</th>
+		<th>Service 3</th>
+		<th>Action</th>
+	</tr>
+	
+	<!--
+		Using FOREACH LOOP for the users array
+		
+		myArray.forEach(function(el, index) {
+			// el - current element, i - index
+		});
+	-->
+	<% if (data) { %>
+	<% data.forEach(function(user){ %>
+		<tr>
+			<td><%= user.name %></td>
+			<td><%= user.email %></td>
+			<td><%= user.wno %></td>
+			<td><%= user.model %></td>
+			<td><%= user.vno %></td>
+			<td><%= user.date %></td>
+			<td><%= user.general %></td>
+			<td><%= user.oil %></td>
+			<td><%= user.water %></td>
+			<td>
+				<div style="float:left">
+					<a href='/users/edit/<%= user.id %>'>Edit</a> &nbsp; &nbsp;							
+					<form method="post" action="/users/delete/<%= user.id %>" style="float:right">
+						<input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+						<input type="hidden" name="_method" value="DELETE" />
+					</form>
+				</div>
+			</td>
+		</tr>
+	<% }) %>
+	<% } %>
+
+</table>
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footer.ejs %>
